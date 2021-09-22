@@ -1,23 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { Form, Input } from './Input';
+import Number from './Number';
 
 function App() {
+  const [newCounter, setNewCounter] = useState<number>(0);
+  const [newName, setNewName] = useState<string>('');
+  const counter = (): void => {
+    setNewCounter(newCounter + 1);
+  };
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setNewName(event.target.value);
+  };
+  const onFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Form onFormSubmit={onFormSubmit}>
+          <Input value={newName} onChange={onChange} />
+        </Form>
+        <Number count={newCounter} />
+        <br />
+        <button onClick={counter}> add </button>
       </header>
     </div>
   );
